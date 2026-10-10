@@ -1,0 +1,52 @@
+services:
+  service-vm:
+    build: ./service-vm
+    privileged: true
+    restart: unless-stopped
+    # Docker inside the VM needs time to stop its own containers cleanly
+    stop_grace_period: 60s
+    ports:
+      - "127.0.0.1:2222:22"
+      - "127.0.0.1:67:80"
+      - "127.0.0.1:6767:8080"
+    # The VM's Docker can't store images on the container's own overlay
+    # filesystem, so its storage needs volumes. /root is one too, so student
+    # edits survive down/up. A volume is only seeded from the image when it is
+    # empty, so after changing the baked-in source run `docker compose down -v`.
+    volumes:
+      - vm-home:/root
+      - vm-docker:/var/lib/docker
+      - vm-containerd:/var/lib/containerd
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS -o /dev/null http://localhost/ && curl -fsS -o /dev/null http://localhost:8080/health"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      # The first boot builds the registry images, which takes minutes
+      start_period: 15m
+
+  attacker_vm:
+    build: ./attacker_vm
+    container_name: attacker
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:666:6767"
+
+  walkthrough:
+    build: ./walkthrough
+    container_name: walkthrough
+    restart: unless-stopped
+    # No depends_on: the slides must be up within seconds while the VM is
+    # still building, so students can watch the readiness lights turn green
+    ports:
+      - "127.0.0.1:80:80"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+
+volumes:
+  vm-home:
+  vm-docker:
+  vm-containerd:

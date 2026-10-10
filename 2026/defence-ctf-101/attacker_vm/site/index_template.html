@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+
+CyberSci Defence Workshop
+
+Attacker Portal, based on the CyberSci Regionals portal by Dmitriy Beryoza (0xd13a@gmail.com)
+
+-->
+<html lang="en">
+	<head>
+		<meta charset=UTF-8>
+		<link rel="stylesheet" href="/static/styles.css">
+		<title>Security Testing Portal</title>
+		<script>
+			async function runAttack(service,attack) {
+				// Clear status text for all elements
+				const attackResults = document.getElementsByClassName(`attack-result`);
+				for (const el of attackResults) {
+					el.innerText = "";
+				}
+
+                let result_id = `result_${service}_${attack}`;
+				document.getElementById(result_id).innerText = "Running the attack... (this can take a minute or two)";
+
+				let response = await fetch(`/attack/${service}/${attack}`);
+				let data = await response.text();
+				document.getElementById(result_id).innerText = data;
+			}
+		</script>
+	</head>
+    <body>
+
+		<h1 class="text-center">Welcome to Security Testing Portal!</h1>
+		<p class="body-text">Use the buttons below to launch simulated attacks against your service.<br><br>
+
+		Every attack exploits one or more vulnerabilities in one or more ways.<br><br>
+
+		Figure out what the vulnerabilities are. Fix them.<br><br>
+
+		Good luck!
+		</p>
+
+		<br>
+
+		<h2 class="text-center">Candidate Registry</h2>
+
+		<p class="body-text">
+		Your service is running in the service-vm (frontend on port 67, backend on port 6767).
+		SSH in to investigate and patch it:<br><br>
+		<code>ssh root@localhost -p 2222</code><br><br>
+
+		Keep your sources under version control. If things go really wrong, there is an
+		emergency backup of the original source in the VM:<br><br>
+		<code>tar xzf ~/registry-backup.tar.gz</code><br><br>
+
+		After patching, rebuild and restart the service from inside the VM:<br><br>
+		<code>docker compose build && docker compose up -d</code><br><br>
+		</p>
+
+		<table class="attacks">
+			<tr><th class="attack">Attack</th><th class="result">Result</th></tr>
+			<tr><td><input type="button" class="center" value="Execute attack scenario #1" onclick="runAttack(0,0);" /></td><td><span class="attack-result" id="result_0_0"></span></td></tr>
+			<tr><td><input type="button" class="center" value="Execute attack scenario #2" onclick="runAttack(0,1);" /></td><td><span class="attack-result" id="result_0_1"></span></td></tr>
+			<tr><td><input type="button" class="center" value="Execute attack scenario #3" onclick="runAttack(0,2);" /></td><td><span class="attack-result" id="result_0_2"></span></td></tr>
+			<tr><td><input type="button" class="center" value="Execute attack scenario #4" onclick="runAttack(0,3);" /></td><td><span class="attack-result" id="result_0_3"></span></td></tr>
+		</table>
+
+	</body>
+</html>

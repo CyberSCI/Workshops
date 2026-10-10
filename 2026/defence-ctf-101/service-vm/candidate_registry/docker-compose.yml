@@ -1,0 +1,31 @@
+services:
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    volumes:
+      - /app/node_modules
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+      - PORT=80
+      # The dev server rejects requests whose Host header isn't localhost,
+      # which blocks the attacker container hitting http://service-vm/api/...
+      - DANGEROUSLY_DISABLE_HOST_CHECK=true
+    depends_on:
+      - backend
+    restart: always
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+#    volumes:
+#      - ./backend/data:/app/data
+    environment:
+      - DB_PATH=/app/data/voter.db
+      - GIN_MODE=debug
+    restart: always

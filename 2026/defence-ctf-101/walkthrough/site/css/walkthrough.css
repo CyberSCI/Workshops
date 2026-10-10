@@ -1,0 +1,467 @@
+/* Fonts are self-hosted so the deck works offline. Licences: ../fonts/OFL-*.txt */
+@font-face {
+  font-family: 'Teko';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url('../fonts/teko-variable.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/lato-400.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url('../fonts/lato-400-italic.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'Lato';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url('../fonts/lato-700.woff2') format('woff2');
+}
+
+/* The CyberSci palette from cybersci.ca (menu and headline red, button and
+   panel red) on a dark ground. Teko for headings and Lato for text, as on the
+   site. */
+:root {
+  --cs-red: #e50000;
+  --cs-red-deep: #c10f1b;
+  --cs-red-soft: #ff6b6b;
+  --cs-ink: #0e0f12;
+  --cs-panel: #181a1f;
+  --cs-line: rgba(255, 255, 255, 0.14);
+  --cs-muted: #a7adb8;
+
+  --wt-up: #2ecc71;
+  --wt-down: #ff4d4d;
+  --wt-idle: #8a8f98;
+
+  --r-background-color: var(--cs-ink);
+  --r-main-font: Lato, Helvetica, Arial, sans-serif;
+  --r-main-font-size: 34px;
+  --r-heading-font: Teko, Helvetica, Arial, sans-serif;
+  --r-heading-font-weight: 500;
+  --r-heading-letter-spacing: 0.02em;
+  --r-heading-line-height: 1.05;
+  --r-heading-text-transform: none;
+  --r-heading1-size: 2.6em;
+  --r-heading2-size: 2em;
+  --r-heading3-size: 1.5em;
+  --r-link-color: var(--cs-red-soft);
+  --r-link-color-hover: #fff;
+  --r-selection-background-color: var(--cs-red-deep);
+}
+
+.reveal .slides {
+  text-align: left;
+}
+
+.reveal h1 {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.reveal ul li::marker {
+  color: var(--cs-red);
+}
+
+.reveal ol li::marker {
+  color: var(--cs-red-soft);
+  font-weight: 700;
+}
+
+.reveal :not(pre) > code {
+  padding: 0.05em 0.3em;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  font-size: 0.85em;
+}
+
+.reveal .progress {
+  color: var(--cs-red);
+}
+
+.reveal .slide-number {
+  background: none;
+  color: var(--cs-muted);
+  font-family: Lato, Helvetica, Arial, sans-serif;
+}
+
+/* Every slide carries the CyberSci header: the logo on a light plate (the
+   logo is black text, so it needs one on a dark ground), the event name, and a
+   hairline with a red accent. The padding also keeps content clear of the
+   navigation arrows at the screen edges. */
+.reveal .slides section:not(.stack) {
+  box-sizing: border-box;
+  padding: 100px 44px 0;
+  background:
+    linear-gradient(var(--cs-red), var(--cs-red)) 44px 83px / 104px 3px no-repeat,
+    linear-gradient(var(--cs-line), var(--cs-line)) 44px 84px / calc(100% - 88px) 1px no-repeat;
+}
+
+.reveal .slides section:not(.stack)::before {
+  content: '';
+  position: absolute;
+  top: 18px;
+  left: 44px;
+  width: 152px;
+  height: 52px;
+  border-radius: 6px;
+  background: #fff url('../img/cybersci-logo.png') no-repeat center / 130px auto;
+}
+
+.reveal .slides section:not(.stack)::after {
+  content: 'CyberSci Training';
+  position: absolute;
+  top: 24px;
+  right: 44px;
+  color: var(--cs-muted);
+  font: 500 28px/1 Teko, Helvetica, Arial, sans-serif;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+/* Every part of the talk names itself in the header. deck.js marks each
+   slide with its part's name (data-section-label); the ready check is not
+   marked, so it keeps the plain event name. */
+.reveal .slides section[data-section-label]::after {
+  content: attr(data-section-label) ' · CyberSci Training';
+}
+
+.reveal .kicker {
+  margin: 0 0 0.1em;
+  color: var(--cs-red-soft);
+  font: 500 1.1em/1.2 Teko, Helvetica, Arial, sans-serif;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+/* Opening slide: a larger logo plate, the event title and the readiness check */
+.reveal .slides section.hero {
+  padding-top: 138px;
+  background: none;
+}
+
+.reveal .slides section.hero::before {
+  top: 34px;
+  width: 280px;
+  height: 80px;
+  background-size: 236px auto;
+}
+
+.reveal .slides section.hero::after {
+  content: none;
+}
+
+.reveal .hero .event-title {
+  margin: 0;
+  color: #fff;
+  font: 500 4em/0.95 Teko, Helvetica, Arial, sans-serif;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.reveal .hero h1 {
+  margin: 0.15em 0 0;
+  color: var(--cs-red-soft);
+  font-size: 1.5em;
+}
+
+.reveal .hero .status-board {
+  gap: 0.3em;
+  margin-top: 0.5em;
+}
+
+.reveal .hero .status-row {
+  padding-top: 0.25em;
+  padding-bottom: 0.25em;
+}
+
+.reveal .hero .status-summary {
+  margin-top: 0.4em;
+}
+
+/* Section opener: a big title with a red bar, set lower on the slide */
+.reveal .slides section.chapter {
+  padding-top: 230px;
+}
+
+.reveal .chapter h1 {
+  margin: 0;
+  padding-left: 40px;
+  border-left: 12px solid var(--cs-red);
+  font-size: 3.6em;
+  line-height: 0.95;
+}
+
+.reveal .chapter h1 ~ p {
+  margin: 0.6em 0 0;
+  padding-left: 52px;
+  color: var(--cs-muted);
+}
+
+/* Statement slide: little text, set big and centred. Add class="statement"
+   to the slide comment. The fixed top padding centres the block by eye,
+   like chapter slides; reveal.js pins display on the sections themselves,
+   so flex layout is not available here. */
+.reveal .slides section.statement {
+  padding-top: 200px;
+  text-align: center;
+}
+
+.reveal .statement h2 {
+  margin: 0 0 0.4em;
+  font-size: 2.4em;
+}
+
+.reveal .statement p,
+.reveal .statement ul,
+.reveal .statement ol {
+  margin: 0;
+  font-size: 1.3em;
+}
+
+/* Centre the markers with the text instead of hanging them in the margin */
+.reveal .statement ul li,
+.reveal .statement ol li {
+  list-style-position: inside;
+}
+
+/* A statement slide with no heading is a lone sentence: give it more
+   presence and sit it closer to the middle. */
+.reveal .slides section.statement:not(:has(h2)) {
+  padding-top: 240px;
+}
+
+.reveal .slides section.statement:not(:has(h2)) p,
+.reveal .slides section.statement:not(:has(h2)) ul,
+.reveal .slides section.statement:not(:has(h2)) ol {
+  font-size: 1.6em;
+}
+
+/* Status lights: the compact strip and the large board share these dots */
+.dot {
+  display: inline-block;
+  flex: none;
+  width: 0.85em;
+  height: 0.85em;
+  border-radius: 50%;
+  background: var(--wt-idle);
+}
+
+[data-state='up'] > .dot {
+  background: var(--wt-up);
+  box-shadow: 0 0 8px var(--wt-up);
+}
+
+[data-state='down'] > .dot {
+  background: var(--wt-down);
+  box-shadow: 0 0 8px var(--wt-down);
+}
+
+.status-strip {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 8px 14px;
+  border: 1px solid var(--cs-line);
+  border-radius: 999px;
+  background: rgba(14, 15, 18, 0.92);
+  color: #e6e6e6;
+  font: 700 14px/1 Lato, Helvetica, Arial, sans-serif;
+}
+
+.status-strip .lights {
+  display: flex;
+  gap: 14px;
+}
+
+.status-strip .light {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: inherit;
+  text-decoration: none;
+}
+
+.status-strip .dot {
+  font-size: 14px;
+}
+
+/* The speaker view embeds this page for its previews, which should not get a strip */
+.in-frame .status-strip {
+  display: none;
+}
+
+.status-strip .strip-button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--cs-muted);
+  font: inherit;
+  cursor: pointer;
+}
+
+.status-strip .strip-button:hover {
+  color: #fff;
+}
+
+.status-board {
+  display: grid;
+  gap: 0.4em;
+  max-width: 760px;
+  margin-top: 0.8em;
+}
+
+.status-row {
+  display: grid;
+  grid-template-columns: auto 5.5em 1fr auto;
+  align-items: center;
+  gap: 0.7em;
+  padding: 0.35em 0.8em;
+  border-left: 4px solid var(--wt-idle);
+  border-radius: 0 6px 6px 0;
+  background: var(--cs-panel);
+  font-size: 0.8em;
+}
+
+.status-row[data-state='up'] {
+  border-left-color: var(--wt-up);
+}
+
+.status-row[data-state='down'] {
+  border-left-color: var(--wt-down);
+}
+
+.status-row .name {
+  font-weight: 700;
+}
+
+.status-row .state {
+  font-weight: 700;
+  color: var(--wt-idle);
+}
+
+.status-row[data-state='up'] .state {
+  color: var(--wt-up);
+}
+
+.status-row[data-state='down'] .state {
+  color: var(--wt-down);
+}
+
+.reveal .status-summary {
+  margin: 0.6em 0 0;
+  color: var(--cs-muted);
+  font-size: 0.75em;
+}
+
+/* "Try it" panels */
+.reveal blockquote.try-it {
+  box-sizing: border-box;
+  width: 100%;
+  margin: 0.8em 0 0;
+  padding: 0.5em 0.9em 0.7em;
+  border-left: 8px solid var(--cs-red);
+  border-radius: 0 6px 6px 0;
+  background: var(--cs-panel);
+  box-shadow: none;
+  font-style: normal;
+}
+
+.reveal blockquote.try-it p {
+  margin: 0 0 0.4em;
+  font-size: 0.8em;
+}
+
+.reveal blockquote.try-it p > strong:first-child {
+  margin-right: 0.6em;
+  padding: 0.05em 0.6em 0;
+  border-radius: 3px;
+  background: var(--cs-red-deep);
+  color: #fff;
+  font: 500 1.15em/1 Teko, Helvetica, Arial, sans-serif;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.reveal blockquote.try-it pre {
+  width: 100%;
+  margin: 0.4em 0 0;
+  font-size: 0.6em;
+  box-shadow: none;
+}
+
+/* Long commands wrap instead of hiding behind a scrollbar on the projector,
+   and stop short of the Copy button */
+.reveal blockquote.try-it pre code {
+  padding-right: 76px;
+  background: #0a0b0d;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+
+.reveal .copy-button {
+  position: absolute;
+  top: 6px;
+  right: 6px;
+  z-index: 1;
+  padding: 4px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  font: 700 14px/1.2 Lato, Helvetica, Arial, sans-serif;
+  cursor: pointer;
+}
+
+.reveal .copy-button:hover {
+  border-color: var(--cs-red-deep);
+  background: var(--cs-red-deep);
+}
+
+/* Screenshots: shrink to fit the space left under the header */
+.reveal .slides section img.screenshot {
+  display: block;
+  max-width: 100%;
+  max-height: 240px;
+  margin: 0.6em 0 0;
+  border: 1px solid var(--cs-line);
+  border-radius: 6px;
+}
+
+.reveal .slides section img.screenshot.tall {
+  max-height: 420px;
+}
+
+.reveal .slides section img.screenshot.big {
+  max-height: 320px;
+}
+
+/* Three screenshots in a row: they must sit in one paragraph for this to
+   apply, so keep the img tags on a single line in the markdown */
+.reveal .slides section img.screenshot.trio {
+  display: inline-block;
+  max-height: 280px;
+  margin: 0.6em 0 0;
+  vertical-align: top;
+}
+
+.reveal .slides section img.screenshot.trio + img.screenshot.trio {
+  margin-left: 0.4em;
+}

@@ -1,0 +1,12 @@
+services:                               # Attack targets
+  - name: "Candidate Registry"          # Service name
+    folder: "candidate_registry"        # Folder where service files are located
+    file: "candidate_attacker.py"       # Attacker script file
+    class: "CandidateAttacker"          # Attacker class name
+    address: "service-vm:80"            # Address of the challenge (backend is on :8080)
+    requests: 8                         # Number of requests to send (will be an equal mix of benign and malicious)
+    flags:                              # Flag for each vulnerability type
+      - "CyberSci{donations_go_brrr}"
+      - "CyberSci{always_buckle_up}"
+      - "CyberSci{script_kiddies_delight}"
+      - "CyberSci{insecure_by_design}"
